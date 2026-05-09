@@ -26,9 +26,9 @@ def main():
     for i in range(0, 3):
         Result.append(None)
     Result[8], Result[9], Result[10] = slots[0], slots[1], slots[2]
-    print(f'Kinetic Weapon:   {Result[8]}')
-    print(f'Energy Weapon:    {Result[9]}')
-    print(f'Power Weapon:     {Result[10]}')
+    print(f'Kinetic Weapon:  {Result[8]}')
+    print(f'Energy Weapon:   {Result[9]}')
+    print(f'Power Weapon:    {Result[10]}')
 
 
 
@@ -75,22 +75,27 @@ def gen_super():
 
 def get_weapons(exotic_slot, fixed_slot):
     slots = [None, None, None]
-    while fixed_slot is None:
-        if exotic_slot == fixed_slot:
-            if Result[1].weapon in exotic[fixed_slot]:
-                if len(exotic[fixed_slot][Result[1].weapon]) == 1:
-                    slots[fixed_slot] = exotic[fixed_slot][Result[1].weapon]
+    if Result[1].weapon is not None:
+        while slots[fixed_slot] is None:
+            if len(Result[1].weapon[0]) > 1:
+                gun = random.choice(Result[1].weapon)
+            else:
+                gun = Result[1].weapon
+            if exotic_slot == fixed_slot:
+                if Result[1].weapon in exotic[fixed_slot]:
+                    if len(exotic[fixed_slot][gun]) == 1:
+                        slots[fixed_slot] = exotic[fixed_slot][gun]
+                    else:
+                        slots[fixed_slot] = random.choice(list(exotic[fixed_slot][gun]))
                 else:
-                    slots[fixed_slot] = random.choice(list(exotic[fixed_slot][Result[1].weapon]))
+                    Result[6] = random.randint(0, 2)
+                    exotic_slot = Result[6]
             else:
-                Result[6] = random.randint(0, 2)
-                exotic_slot = Result[6]
-        else:
-            if Result[1].weapon in legendary[fixed_slot]:
-                slots[fixed_slot] = Result[1].weapon
-            else:
-                Result[7] = random.randint(0, 2)
-                fixed_slot = Result[7]
+                if gun in legendary[fixed_slot]:
+                    slots[fixed_slot] = gun
+                else:
+                    Result[7] = random.randint(0, 2)
+                    fixed_slot = Result[7]
     for index, slot in enumerate(slots):
         if slot is None:
             if index == exotic_slot:
