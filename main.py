@@ -21,7 +21,7 @@ def main():
     print(f'Super:           {Result["super"]}')
     Result["exotic_slot"] = random.randint(0, 2)
     Result["fixed_slot"] = random.randint(0, 2)
-    # These will be rerolled in get_weapons() if the combination is impossible
+    # These will be rerolled in gen_weapons() if the combination is impossible
     slots = gen_weapons(Result["exotic_slot"], Result["fixed_slot"])
     Result["kinetic"], Result["energy"], Result["power"] = slots[0], slots[1], slots[2]
     print(f'Kinetic Weapon:  {Result["kinetic"]}')
@@ -161,7 +161,7 @@ def gen_weapons(exotic_slot, fixed_slot):
             else:
                 # Sets the slot to a random legenary from that slot
                 slots[index] = random.choice(list(legendary[index]))
-                
+
     return slots
 
 
